@@ -4,11 +4,22 @@ import React, { useState } from "react";
 
 export default function Home() {
   const [email, setEmail] = useState("");
+  const [pingResponse, setPingResponse] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(`Entered email: ${email}`);
     // Add further processing logic here if needed
+  };
+
+  const callPingApi = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/ping'); // adjust URL if your backend runs elsewhere
+      const text = await response.text();
+      setPingResponse(text); // should be 'pong'
+    } catch (error) {
+      setPingResponse('Failed to call API');
+    }
   };
 
   return (
@@ -32,6 +43,15 @@ export default function Home() {
           Enter
         </button>
       </form>
+
+      <button
+        onClick={callPingApi}
+        className="mt-6 bg-green-600 text-white rounded-md px-6 py-2 hover:bg-green-700 transition"
+      >
+        Call /ping API
+      </button>
+
+      {pingResponse && <p className="mt-4 text-lg">Response: {pingResponse}</p>}
     </div>
   );
 }
