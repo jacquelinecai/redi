@@ -15,7 +15,7 @@ const firebaseConfig = {
   storageBucket: "redi-fb4ea.firebasestorage.app",
   messagingSenderId: "827839734794",
   appId: "1:827839734794:web:ed5e0c0301b9b25b82ebf3",
-  measurementId: "G-5VS50PFWGZ"
+  measurementId: "G-5VS50PFWGZ",
 };
 
 // Initialize Firebase

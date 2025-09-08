@@ -1,40 +1,31 @@
-
-import { API_BASE_URL } from '../constants/constants';
+import { API_BASE_URL } from "../../constants/constants";
 // If the file does not exist, create '../constants/constants.ts' with:
 // export const API_BASE_URL = 'https://your-api-base-url.com';
 
-// Returns the user's name (or throws if the request fails)
-export const getName = async (uid: string): Promise<string | ''> => {
-  const res = await fetch(
-    `${API_BASE_URL}/api/users/${encodeURIComponent(uid)}/name`
-  );
+// Get all emails: return array of email strings
+export const getEmails = async (): Promise<string[]> => {
+  const res = await fetch(`${API_BASE_URL}/api/landing-emails`);
 
   if (!res.ok) {
-    // Prefer returning '' so the caller can decide what to do
-    console.warn(`getName → ${res.status}`);
-    return '';
+    console.warn(`getEmails failed → ${res.status}`);
+    return [];
   }
-
-  const { name } = (await res.json()) as { name?: string };
-  return name ?? '';
+  // Assume API returns array of { id: string, email: string }
+  const data = (await res.json()) as Array<{ id: string; email: string }>;
+  return data.map((item) => item.email);
 };
 
-export const apiSetName = async (uid: string, name: string): Promise<void> => {
-  const res = await fetch(
-    `${API_BASE_URL}/api/users/${encodeURIComponent(uid)}/name`,
-    {
-      method: 'PUT',                      // <- idempotent update
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name }),
-    }
-  );
+// Add a new email
+export const apiAddEmail = async (email: string): Promise<void> => {
+  const res = await fetch(`${API_BASE_URL}/api/landing-emails`, {
+    method: "POST", // use POST to add
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
 
   if (!res.ok) {
-    const msg = `setName failed – status ${res.status}`;
+    const msg = `apiAddEmail failed – status ${res.status}`;
     console.error(msg);
     throw new Error(msg);
   }
 };
-
-
-

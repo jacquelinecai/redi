@@ -1,24 +1,53 @@
-'use client'; // for using useState
+"use client"; // for using useState
 
+import { apiAddEmail, getEmails } from "@/api/api";
 import React, { useState } from "react";
+import { API_BASE_URL } from "../../constants/constants";
 
 export default function Home() {
   const [email, setEmail] = useState("");
+  const [emails, setEmails] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [pingResponse, setPingResponse] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Entered email: ${email}`);
-    // Add further processing logic here if needed
+    if (!email) return;
+    setLoading(true);
+    setError(null);
+    try {
+      await apiAddEmail(email);
+      setEmails((prev) => [...prev, email]); // update UI optimistically
+      setEmail(""); // clear input
+      alert("Email added successfully!");
+    } catch {
+      setError("Failed to add email");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchEmails = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const list = await getEmails();
+      setEmails(list);
+    } catch {
+      setError("Failed to load emails");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const callPingApi = async () => {
     try {
-      const response = await fetch('http://localhost:3001/ping'); // adjust URL if your backend runs elsewhere
+      const response = await fetch(`${API_BASE_URL}/ping`);
       const text = await response.text();
       setPingResponse(text); // should be 'pong'
     } catch (error) {
-      setPingResponse('Failed to call API');
+      setPingResponse("Failed to call API");
     }
   };
 
@@ -43,6 +72,22 @@ export default function Home() {
           Enter
         </button>
       </form>
+
+      <button
+        onClick={fetchEmails}
+        disabled={loading}
+        className={`mt-6 text-white rounded-md px-6 py-2 transition ${
+          loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-blue-600 hover:bg-green-700"
+        }`}
+      >
+        {loading ? "Loading emails..." : "Get emails"}
+      </button>
+
+      {emails.length > 0 && (
+        <p className="mt-4 max-w-md break-words">{emails.join(" ")}</p>
+      )}
 
       <button
         onClick={callPingApi}
