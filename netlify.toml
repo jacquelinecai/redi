@@ -1,2 +1,10 @@
+[build]
+  base = "redi-web"
+  command = "npm run build"
+  publish = "redi-web/.next"
+
 [functions]
   node_bundler = "esbuild"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
