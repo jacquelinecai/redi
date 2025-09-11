@@ -4,7 +4,11 @@
     "slug": "redi",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": {
+      "src": "./assets/images/icon.png",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.incubator.redi"
+    },
     "scheme": "redi",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -16,7 +20,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.incubator.redi"
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +38,15 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      ["expo-build-properties", {
+        "ios": {
+          "useFrameworks": "static"
+        }
+      }],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/firestore"
     ],
     "experiments": {
       "typedRoutes": true
