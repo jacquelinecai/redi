@@ -2,6 +2,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import landingPageRouter from './routes/landing-page';
+import profilesRouter from './routes/profiles';
+import usersRouter from './routes/users';
 
 dotenv.config();
 

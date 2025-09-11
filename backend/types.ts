@@ -68,8 +68,8 @@ export interface ProfileDoc {
   school: School;
   major: string[];
   pictures: string[]; // URLs to images in Firebase Storage
-  createdAt: FirestoreTimestampType | FieldValue;
-  updatedAt: FirestoreTimestampType | FieldValue;
+  createdAt: FirestoreTimestampType;
+  updatedAt: FirestoreTimestampType;
 }
 
 // =============================================================================
