@@ -45,12 +45,11 @@ export default function Index() {
   const signInWithGoogle = async () => {
     setLoading(true);
     try {
-      // Configure the request
       const request = new AuthSession.AuthRequest({
-        clientId: '827839734794-nk4t0gfl7s9fdjcejg87a61n6co9pjb9.apps.googleusercontent.com', // Replace with your Google Client ID
+        clientId: '827839734794-ms5jes64lv5u1590imn34gnd4o9m7hj1.apps.googleusercontent.com', // Google Client ID
         scopes: ['openid', 'profile', 'email'],
         redirectUri: AuthSession.makeRedirectUri({
-          scheme: 'com.incubator.redi', // Replace with your app scheme
+          scheme: 'com.incubator.redi', 
         }),
         responseType: AuthSession.ResponseType.IdToken,
       });
