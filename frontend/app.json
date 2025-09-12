@@ -6,8 +6,7 @@
     "orientation": "portrait",
     "icon": {
       "src": "./assets/images/icon.png",
-      "supportsTablet": true,
-      "bundleIdentifier": "com.incubator.redi"
+      "supportsTablet": true
     },
     "scheme": "redi",
     "userInterfaceStyle": "automatic",

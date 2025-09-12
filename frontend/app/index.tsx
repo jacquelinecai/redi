@@ -1,9 +1,10 @@
-
 import auth from '@react-native-firebase/auth';
+import * as AuthSession from 'expo-auth-session';
 import { FirebaseError } from 'firebase/app';
 import { useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Button,
   KeyboardAvoidingView,
   StyleSheet,
@@ -20,10 +21,10 @@ export default function Index() {
     setLoading(true);
     try {
       await auth().createUserWithEmailAndPassword(email, password);
-      alert('Check your emails!');
+      Alert.alert('Success', 'Check your emails!');
     } catch (e: any) {
       const err = e as FirebaseError;
-      alert('Registration failed: ' + err.message);
+      Alert.alert('Registration failed', err.message);
     } finally {
       setLoading(false);
     }
@@ -35,7 +36,43 @@ export default function Index() {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (e: any) {
       const err = e as FirebaseError;
-      alert('Sign in failed: ' + err.message);
+      Alert.alert('Sign in failed', err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    setLoading(true);
+    try {
+      // Configure the request
+      const request = new AuthSession.AuthRequest({
+        clientId: '827839734794-nk4t0gfl7s9fdjcejg87a61n6co9pjb9.apps.googleusercontent.com', // Replace with your Google Client ID
+        scopes: ['openid', 'profile', 'email'],
+        redirectUri: AuthSession.makeRedirectUri({
+          scheme: 'com.incubator.redi', // Replace with your app scheme
+        }),
+        responseType: AuthSession.ResponseType.IdToken,
+      });
+
+      const result = await request.promptAsync({
+        authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+      });
+
+      if (result.type === 'success') {
+        const { id_token } = result.params;
+        
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(id_token);
+        
+        // Sign-in the user with the credential
+        await auth().signInWithCredential(googleCredential);
+      } else if (result.type === 'cancel') {
+        Alert.alert('Sign in cancelled');
+      }
+    } catch (error: any) {
+      console.log('Google Sign-In Error:', error);
+      Alert.alert('Google Sign-In failed', error.message);
     } finally {
       setLoading(false);
     }
@@ -65,6 +102,8 @@ export default function Index() {
           <>
             <Button onPress={signIn} title="Login" />
             <Button onPress={signUp} title="Create account" />
+            <View style={styles.divider} />
+            <Button onPress={signInWithGoogle} title="Sign in with Google" />
           </>
         )}
       </KeyboardAvoidingView>
@@ -85,5 +124,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 10,
     backgroundColor: '#fff',
+  },
+  divider: {
+    marginVertical: 10,
   },
 });
