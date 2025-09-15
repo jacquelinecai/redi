@@ -89,13 +89,6 @@ export default function Home() {
         <p className="mt-4 max-w-md break-words">{emails.join(" ")}</p>
       )}
 
-      <button
-        onClick={callPingApi}
-        className="mt-6 bg-green-600 text-white rounded-md px-6 py-2 hover:bg-green-700 transition"
-      >
-        Call /ping API
-      </button>
-
       {pingResponse && <p className="mt-4 text-lg">Response: {pingResponse}</p>}
     </div>
   );

@@ -18,8 +18,10 @@ router.get("/api/landing-emails", async (req, res) => {
 // POST a new document
 router.post("/api/landing-emails", async (req, res) => {
   try {
-    console.log("POST body:", req.body); // debug print
     const data = req.body;
+    if (!data.email || typeof data.email !== "string" || !data.email.includes("@")) {
+      return res.status(400).json({ error: "Invalid email" });
+    }
     const docRef = await db.collection("landing-emails").add(data);
     res.status(201).json({ id: docRef.id });
   } catch (error) {
