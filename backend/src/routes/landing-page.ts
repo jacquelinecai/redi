@@ -22,6 +22,13 @@ router.post("/api/landing-emails", async (req, res) => {
     if (!data.email || typeof data.email !== "string" || !data.email.includes("@")) {
       return res.status(400).json({ error: "Invalid email" });
     }
+    const existingDoc = await db.collection("landing-emails")
+      .where("email", "==", data.email.toLowerCase())
+      .get();
+    
+    if (!existingDoc.empty) {
+      return res.status(409).json({ error: "Email already exists" });
+    }
     const docRef = await db.collection("landing-emails").add(data);
     res.status(201).json({ id: docRef.id });
   } catch (error) {
