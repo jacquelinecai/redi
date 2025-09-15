@@ -11,13 +11,15 @@ type FirestoreTimestampType = FirestoreTimestamp | Date;
 // User document in Firestore (users collection)
 export interface UserDoc {
   netid: string;
-  password: string; // should hash before storing
+  email: string;
+  firebaseUid: string;
   createdAt: FirestoreTimestampType;
 }
 // User document when writing to Firestore (includes FieldValue for serverTimestamp)
 export interface UserDocWrite {
   netid: string;
-  password: string;
+  email: string;
+  firebaseUid: string;
   createdAt: FirestoreTimestampType | FieldValue;
 }
 
