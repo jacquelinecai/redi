@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { API_BASE_URL } from '../constants/constants';
 
 interface EmailDoc {
   id: string;
@@ -8,7 +9,7 @@ interface EmailDoc {
 
 async function listEmails(): Promise<void> {
   try {
-    const response = await fetch('http://localhost:3001/api/landing-emails');
+    const response = await fetch(`${API_BASE_URL}/api/landing-emails`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
