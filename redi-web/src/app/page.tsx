@@ -2,14 +2,12 @@
 
 import { apiAddEmail, getEmails } from "@/api/api";
 import React, { useState } from "react";
-import { API_BASE_URL } from "../../constants/constants";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [emails, setEmails] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pingResponse, setPingResponse] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,6 +15,20 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
+
+      // first check existing emails for duplicates
+      const existingEmails = await getEmails();
+
+      const emailExists = existingEmails.some(
+        existingEmail => existingEmail.toLowerCase() === email.toLowerCase()
+      );
+
+      if (emailExists) {
+        setError("This email is already registered!");
+        setLoading(false);
+        return;
+      }
+
       await apiAddEmail(email);
       setEmails((prev) => [...prev, email]); // update UI optimistically
       setEmail(""); // clear input
@@ -38,16 +50,6 @@ export default function Home() {
       setError("Failed to load emails");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const callPingApi = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/ping`);
-      const text = await response.text();
-      setPingResponse(text); // should be 'pong'
-    } catch (error) {
-      setPingResponse("Failed to call API");
     }
   };
 
@@ -88,8 +90,9 @@ export default function Home() {
       {emails.length > 0 && (
         <p className="mt-4 max-w-md break-words">{emails.join(" ")}</p>
       )}
-
-      {pingResponse && <p className="mt-4 text-lg">Response: {pingResponse}</p>}
+      {error && (
+        <p className="mt-4 max-w-md break-words text-red-500">{error}</p>
+      )}
     </div>
   );
 }
