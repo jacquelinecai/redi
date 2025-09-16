@@ -56,12 +56,14 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-between min-h-screen p-4 md:p-8 bg-[url(/background.png)] bg-cover bg-center">
       <div className="flex justify-between w-full">
-        <p className="text-[20px] md:text-[24px]">Launching 11.11.25</p>
+        <p className="text-[20px] md:text-[24px] text-white">
+          Launching 11.11.25
+        </p>
 
         <Link
           href="https://www.instagram.com/redi.match/"
           target="_blank"
-          className="p-2"
+          className="p-2 text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,8 +84,8 @@ export default function Home() {
         </Link>
       </div>
 
-      <main className="flex flex-col gap-6 w-full">
-        <div className="flex flex-col items-center justify-center gap-2">
+      <main className="flex flex-col gap-8 w-full">
+        <div className="flex flex-col items-center justify-center gap-4">
           <img src="/logo.svg" alt="Redi app logo" className="w-24 h-24" />
           <h1 className="text-4xl leading-14 text-center md:leading-22 md:text-7xl text-white">
             Cornell has 15,000 students.
