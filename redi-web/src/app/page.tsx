@@ -54,9 +54,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen p-8 bg-[url(/background.png)] bg-cover bg-center">
+    <div className="flex flex-col items-center justify-between min-h-screen p-4 md:p-8 bg-[url(/background.png)] bg-cover bg-center">
       <div className="flex justify-between w-full">
-        <p className="text-[24px]">Launching 11.11.25</p>
+        <p className="text-[20px] md:text-[24px]">Launching 11.11.25</p>
 
         <Link
           href="https://www.instagram.com/redi.match/"
@@ -82,31 +82,34 @@ export default function Home() {
         </Link>
       </div>
 
-      <main className="flex flex-col gap-6">
+      <main className="flex flex-col gap-6 w-full">
         <div className="flex flex-col items-center justify-center gap-2">
           <img src="/logo.svg" alt="Redi app logo" className="w-24 h-24" />
-          <h1 className="text-7xl text-center leading-22">
+          <h1 className="text-4xl leading-14 text-center md:leading-22 md:text-7xl">
             Cornell has 15,000 students.
             <br />
             Each week, find the right 3.
           </h1>
-          <h2 className="text-3xl text-white opacity-70">
+          <h2 className="text-xl md:text-3xl text-white opacity-70">
             Redi is Cornell's first dating app.
           </h2>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex relative w-fit m-auto">
+        <form
+          onSubmit={handleSubmit}
+          className="flex relative w-full md:w-fit md:m-auto"
+        >
           <input
             type="email"
             placeholder="ezra123@cornell.edu"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="rounded-full h-[70px] p-1 pl-6 bg-white w-[600px] text-[20px] placeholder:opacity-50 placeholder:text-black focus:[box-shadow:0_0_0_5px_rgba(255_255_255_/_50%)] focus:outline-none text-black transition"
+            className="rounded-full h-[64px] md:h-[70px] p-1 pl-6 bg-white w-full md:w-[600px] text-[16px] md:text-[20px] placeholder:opacity-50 placeholder:text-black focus:[box-shadow:0_0_0_5px_rgba(255_255_255_/_50%)] focus:outline-none text-black transition"
           />
           <button
             type="submit"
-            className="bg-[linear-gradient(135.7deg,_#000000_0%,_#333333_100.01%)] text-white rounded-full px-6 py-4 text-[20px] absolute right-1 top-1 cursor-pointer transform 
+            className="bg-[linear-gradient(135.7deg,_#000000_0%,_#333333_100.01%)] text-white rounded-full px-6 py-4 text-[16px] md:text-[20px] absolute right-1 top-1 cursor-pointer transform 
             hover:-translate-y-1.5 hover:[box-shadow:0_6px_0_0_rgba(0_0_0_/_60%)] hover:opacity-90
             focus-visible:-translate-y-1.5 focus-visible:[box-shadow:0_6px_0_0_rgba(0_0_0_/_60%)] focus-visible:opacity-90
             focus:outline-none
@@ -118,7 +121,7 @@ export default function Home() {
         </form>
       </main>
 
-      <div className="flex gap-6 justify-center [&>div]:w-[200px]">
+      <div className="flex gap-6 justify-center md:[&>div]:w-[200px]">
         <div className="flex flex-col gap-2 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +143,9 @@ export default function Home() {
             <circle cx="12" cy="9" r="2" />
           </svg>
 
-          <p className="text-[20px] text-center">Campus-specific prompts</p>
+          <p className="text-[16px] md:text-[20px] text-center">
+            Campus-specific prompts
+          </p>
         </div>
 
         <div className="flex flex-col gap-2 items-center">
@@ -160,7 +165,9 @@ export default function Home() {
             <path d="m9 12 2 2 4-4" />
           </svg>
 
-          <p className="text-[20px] text-center">No risk, private matches</p>
+          <p className="text-[16px] md:text-[20px] text-center">
+            No risk, private matches
+          </p>
         </div>
 
         <div className="flex flex-col gap-2 items-center">
@@ -188,7 +195,9 @@ export default function Home() {
             <path d="M16 18h.01" />
           </svg>
 
-          <p className="text-[20px] text-center">New matches every Friday</p>
+          <p className="text-[16px] md:text-[20px] text-center">
+            New matches every Friday
+          </p>
         </div>
       </div>
 
