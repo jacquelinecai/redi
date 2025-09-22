@@ -1,11 +1,11 @@
 {
   "workspaces": [
     "frontend",
-    "redi-web",
-    "backend"
+    "redi-web"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
+    "build:web": "npm run build --workspaces:redi-web",
     "dev": "npm run dev --workspaces"
   },
   "devDependencies": {
