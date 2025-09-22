@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces",
-    "build:web": "npm run build --workspaces:redi-web",
+    "build:web": "cd redi-web && npm run build",
     "dev": "npm run dev --workspaces"
   },
   "devDependencies": {
