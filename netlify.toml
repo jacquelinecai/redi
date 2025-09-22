@@ -1,2 +1,2 @@
 [build]
-  command = "npm run build:web"
+  command = "npm run build"
